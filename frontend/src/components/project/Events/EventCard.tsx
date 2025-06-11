@@ -1,9 +1,8 @@
-'use client';
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import { FaBed, FaBath, FaRuler, FaMapMarkerAlt, FaRegClock, FaLink, FaLocationArrow } from 'react-icons/fa';
+import { FaBed, FaMapMarkerAlt, FaRegClock, FaLink, FaLocationArrow } from 'react-icons/fa';
 import { BiBuildingHouse } from 'react-icons/bi';
 import { MdAccessTimeFilled, MdDateRange } from "react-icons/md";
 import { format } from 'date-fns';

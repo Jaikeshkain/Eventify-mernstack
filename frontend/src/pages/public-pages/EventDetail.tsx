@@ -1,19 +1,8 @@
-"use client";
-
-import { useEffect, useState } from "react";
-// import Image from "next/image";
-import { useNavigate, Link, useParams } from "react-router-dom";
-// import LoadingSpinner from "@/components/ui/LoadingSpinner";
-import { Alert } from "@/components/ui/alert";
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Slider from "react-slick";
 import {
-  FaBed,
-  FaBath,
-  FaRuler,
   FaMapMarkerAlt,
-  FaPhone,
-  FaEnvelope,
-  FaUser,
   FaCalendarAlt,
   FaClock,
   FaLocationArrow,
@@ -21,27 +10,24 @@ import {
   FaTicketAlt,
   FaUsers,
 } from "react-icons/fa";
-import { BiBuildingHouse } from "react-icons/bi";
 
 // Import slick carousel styles
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useAuth } from "@/context/AuthContext";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { DeleteEventAPI, GetEventByIdAPI } from "@/services/EventService";
+import { useQuery } from "@tanstack/react-query";
+import { GetEventByIdAPI } from "@/services/EventService";
 import AlertMessage from "@/components/project/AlertMessage";
 import LoadingSpinner from "@/components/project/LoadingSpinner";
 import { format } from "date-fns";
 import { MdCategory, MdOutlinePanoramaPhotosphereSelect } from "react-icons/md";
 import { Button } from "@/components/ui/button";
-import CustomAlertDialog from "@/components/project/AlertDialog";
-import CustomAlertMessageDialog from "@/components/project/AlertMessageDialog";
 import DeleteEvent from "@/components/project/Events/DeleteEvent";
 
 export default function EventDetailsClient() {
   const { id } = useParams();
   const [showFullscreenSlider, setShowFullscreenSlider] = useState(false);
-  const {userData,token}=useAuth()
+  const {userData}=useAuth()
   const navigate=useNavigate()
   const sliderSettings = {
     dots: true,
@@ -67,20 +53,6 @@ export default function EventDetailsClient() {
     queryFn: () => GetEventByIdAPI(id as string)
   });
 
-  const mutation=useMutation({
-    mutationFn:(id:string)=>DeleteEventAPI(id,token as string),
-    mutationKey:["delete-event",id],
-  })
-
-  const handleDeleteEvent = () => {
-    mutation.mutateAsync(data?.event?._id).then(()=>{
-      <CustomAlertMessageDialog title="Event deleted successfully" description="Event deleted successfully" type="success" pathname="/events"/>
-    }).catch((error:any)=>{
-      <CustomAlertMessageDialog title="Error" description={error?.message} type="error" pathname="/events"/>
-    }).finally(()=>{
-      navigate("/events")
-    })
-  };
 
   return (
 

@@ -6,7 +6,6 @@ export const getOrganizerTickets = async (
   search = "",
   status: string,
   eventId: string,
-  limit: number,
   token: string,
 ) => {
   try{

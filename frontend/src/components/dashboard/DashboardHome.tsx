@@ -1,5 +1,5 @@
-import { Card } from "../ui/card";
-import { Button } from "../ui/button";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Plus, Users, Calendar, TrendingUp } from "lucide-react";
 import {

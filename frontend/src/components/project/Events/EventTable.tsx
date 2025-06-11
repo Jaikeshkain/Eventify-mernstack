@@ -1,20 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { TableCell, TableRow } from "@/components/ui/table";
 import { format } from "date-fns";
 import { BarChart2, Calendar, DollarSign, Edit, MapPin, Ticket, Users } from "lucide-react";
-import { Trash2 } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import CustomAlertDialog from "../AlertDialog";
-import { useMutation } from "@tanstack/react-query";
-import { DeleteEventAPI } from "@/services/EventService";
-import CustomAlertMessageDialog from "../AlertMessageDialog";
-import { useAuth } from "@/context/AuthContext";
+import { Link } from "react-router-dom";
 import DeleteEvent from "./DeleteEvent";
 
 
 const EventTable = ({event,getStatusBadge}:{event:any,getStatusBadge:any}) => {
-  const {token}=useAuth();
-  const navigate=useNavigate();
       
  
     return (

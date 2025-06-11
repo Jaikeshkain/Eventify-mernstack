@@ -1,5 +1,4 @@
-"use client";
-
+import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {Link} from "react-router-dom";
@@ -35,7 +34,7 @@ export default function Register() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    mutation.mutateAsync().then((data)=>{
+    mutation.mutateAsync().then(()=>{
       navigate("/login");
     }).catch((error)=>{
       console.log(error);

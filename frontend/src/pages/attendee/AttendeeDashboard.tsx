@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import QRCodeSVG from "react-qr-code";
 import { BiCalendar, BiMap, BiDownload, BiTime } from "react-icons/bi";
@@ -50,7 +50,7 @@ export default function AttendeeDashboard() {
 
   const {token,userData}=useAuth()
   const [ticketData,setTicketData]=useState<Ticket[]>([])
-  const {data,isLoading,error}=useQuery({
+  const {data}=useQuery({
     queryKey:["tickets"],
     queryFn:()=>getTicketsForAttendee(token as string)
   })

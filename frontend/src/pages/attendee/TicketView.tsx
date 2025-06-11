@@ -1,6 +1,6 @@
 // src/pages/TicketViewer.tsx
 import { useParams } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getTicketByIdAPI } from "@/services/TicketService";
 import { Button } from "@/components/ui/button";

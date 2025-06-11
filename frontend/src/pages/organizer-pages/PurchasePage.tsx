@@ -1,5 +1,5 @@
 import QRCode from "react-qr-code";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { FaCheckCircle } from "react-icons/fa";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
@@ -10,7 +10,6 @@ import CustomAlertMessageDialog from "@/components/project/AlertMessageDialog";
 
 const TicketPaymentQR = () => {
   const { price, quantity, eventName,userId,eventId } = useParams();
-  const navigate = useNavigate();
   const upiId = "hjoy118181689-1@oksbi";
   const amount = Number(price) * Number(quantity);
   const {token}=useAuth()

@@ -3,11 +3,10 @@ import { MdAccessTimeFilled, MdCategory, MdDateRange, MdDescription, MdMyLocatio
 import { SiEventbrite } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import CustomAlertDialog from "@/components/project/AlertDialog";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { DeleteEventAPI, EditEventAPI, EditEventImagesAPI, GetEventByIdAPI } from "@/services/EventService";
-import { format } from "date-fns";
+import { EditEventAPI, EditEventImagesAPI, GetEventByIdAPI } from "@/services/EventService";
 import CustomAlertMessageDialog from "@/components/project/AlertMessageDialog";
 import { useAuth } from "@/context/AuthContext";
 import LoadingSpinner from "@/components/project/LoadingSpinner";
@@ -189,7 +188,7 @@ const [alert,setAlert]=useState({title:"",description:"",type:"",pathname:""})
   }
 
     if (userData?.role !== "organizer") {
-      return <NotAdmin userData={userData} />;
+      return <NotAdmin/>;
     }
   return (
     <div className="min-h-screen bg-gradient-to-b from-[#050b2c] to-[#0a1854] py-12">

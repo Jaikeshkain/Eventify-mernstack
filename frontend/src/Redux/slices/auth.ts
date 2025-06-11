@@ -1,4 +1,4 @@
-import { LogoutAPI } from "@/services/UserService";
+
 import { createSlice } from "@reduxjs/toolkit";
 
 const authSlice=createSlice({
@@ -11,7 +11,7 @@ const authSlice=createSlice({
         loginAction:(state,action)=>{
             state.user=action.payload;
         },
-        logoutAction:(state,action)=>{
+        logoutAction:(state)=>{
             state.user=null;
             localStorage.removeItem("USER_INFO");
         },

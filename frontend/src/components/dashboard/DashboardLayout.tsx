@@ -12,7 +12,7 @@ import {
   LogOut,
   Search
 } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { logoutAction } from "@/Redux/slices/auth";
 import { useDispatch } from "react-redux";
 import NotAdmin from "../project/auth/NotAdmin";
@@ -41,12 +41,12 @@ export default function DashboardLayout() {
   });
   const handleLogout=()=>{
     mutation.mutateAsync();
-    dispatch(logoutAction(null));
+    dispatch(logoutAction());
     navigate("/login");
   }
 
     if (userData?.role !== "organizer") {
-      return <NotAdmin userData={userData} />;
+      return <NotAdmin/>;
     }
   return (
     <div className="min-h-screen bg-gray-50">

@@ -103,10 +103,9 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   mutation.mutateAsync(formData)
 };
 
-const handleDraft = async (e: React.FormEvent<HTMLFormElement>) => {
+const handleDraft = async (e: React.MouseEvent<HTMLButtonElement>) => {
   e.preventDefault();
   setLoading(true);
-
 
   //status logic
   const formData = new FormData();
@@ -137,7 +136,7 @@ const handleDraft = async (e: React.FormEvent<HTMLFormElement>) => {
         setEventData(prev => ({
           ...prev,
           [parent]: {
-            ...prev[parent as keyof typeof prev],
+            ...(prev[parent as keyof typeof prev] as Record<string, any>),
             [child]: value
           }
         }));
@@ -229,7 +228,7 @@ const handleDraft = async (e: React.FormEvent<HTMLFormElement>) => {
 
   if(userData?.role!=="organizer"){
     return(
-      <NotAdmin userData={userData}/>
+      <NotAdmin/>
     )
   }
 

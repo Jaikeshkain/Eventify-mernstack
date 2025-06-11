@@ -19,7 +19,7 @@ export const AuthProvider=({children}:{children:React.ReactNode})=>{
   const [userId,setUserId]=useState<string|null>(null)
   const [token,setToken]=useState<string|null>(null)
 
-  const {data,isError,error} = useQuery({
+  const {data,error} = useQuery({
     queryKey:["user",userId],
     queryFn:()=>GetUserByIdAPI(userId as string),
     enabled:!!userId

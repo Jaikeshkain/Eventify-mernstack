@@ -1,10 +1,8 @@
-"use client";
-
+import React from "react";
 import { useState } from "react";
-import { useMatch, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaEnvelope, FaLock, FaSpinner } from "react-icons/fa";
-import { BiBuildingHouse } from "react-icons/bi";
 import { SiEventbrite } from "react-icons/si";
 import { useMutation } from "@tanstack/react-query";
 import { LoginAPI } from "@/services/UserService";
@@ -14,7 +12,6 @@ import { loginAction } from "@/Redux/slices/auth";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -34,7 +31,6 @@ export default function Login() {
       navigate("/")
     }).catch((error) => {
       console.log(error);
-      setError(error.response.data.message);
     }).finally(()=>{
       setIsLoading(false)
     })

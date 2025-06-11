@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getOrganizerTickets } from "@/services/TicketService";
 import { useAuth } from "@/context/AuthContext";
 
-export const useOrganizerTickets = ({ page, search, status, eventId, limit }: { page: number, search: string, status: string, eventId: string, limit: number }) => {
+export const useOrganizerTickets = ({ page, search, status, eventId }: { page: number, search: string, status: string, eventId: string }) => {
     const {token}=useAuth()
     if(!token){
         return {
@@ -13,6 +13,6 @@ export const useOrganizerTickets = ({ page, search, status, eventId, limit }: { 
     }
   return useQuery({
     queryKey: ["organizer-tickets", page, search, status, eventId],
-    queryFn: () => getOrganizerTickets(page, search, status, eventId, limit, token),
+    queryFn: () => getOrganizerTickets(page, search, status, eventId, token),
   });
 };

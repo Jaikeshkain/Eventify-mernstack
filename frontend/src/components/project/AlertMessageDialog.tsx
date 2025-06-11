@@ -1,15 +1,12 @@
 import {
   AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function CustomAlertMessageDialog({title,description,type,pathname}:{title:string,description:string,type:string,pathname:string}){

@@ -65,7 +65,7 @@ export default function MyEvents() {
     navigate(`?${params.toString()}`, { replace: true });
   };
 
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ["organizer-events", filters],
     queryFn: () =>
       GetEventsByOrganizerAPI(userData?._id, token as string, filters),

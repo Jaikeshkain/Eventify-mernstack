@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -28,7 +28,6 @@ const TicketListPage = () => {
   const [page, setPage] = useState(1);
   const [isQRModalOpen, setQRModalOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState<any | null>(null);
-  const [varifyLoading, setVarifyLoading] = useState("")
   const [alert,setAlert]=useState({title:"",description:"",type:"",pathname:""})
   const { token } = useAuth();
   const { data, isLoading, error } = useOrganizerTickets({
@@ -36,7 +35,6 @@ const TicketListPage = () => {
     search,
     status: statusFilter !== "all" ? statusFilter : "",
     eventId: eventFilter !== "all" ? eventFilter : "",
-    limit: 10,
   });
 
 
@@ -51,14 +49,11 @@ const TicketListPage = () => {
     mutationFn: (qrId: string) => VerifyQRAPI(qrId, token as string),
     mutationKey: ["verifyQR"],
     onMutate:()=>{
-      setVarifyLoading("Verifying...")
     },
     onSuccess:()=>{
-      setVarifyLoading("Verified")
       setAlert({title:"Success",description:"QR verified successfully",type:"success",pathname:"/dashboard/organizer"})
     },
-    onError:(error)=>{
-      setVarifyLoading("Error")
+    onError:(error:any)=>{
       setAlert({title:"Error",description:error.message,type:"error",pathname:"/dashboard/organizer"})
     }
   });
@@ -69,14 +64,11 @@ const TicketListPage = () => {
     mutationFn: (qrId: string) => RejectQRAPI(qrId, token as string),
     mutationKey: ["rejectQR"],
     onMutate:()=>{
-      setVarifyLoading("Rejecting...")
     },
     onSuccess:()=>{
-      setVarifyLoading("Rejected")
       setAlert({title:"Success",description:"QR rejected successfully",type:"success",pathname:"/dashboard/organizer"})
     },
-    onError:(error)=>{
-      setVarifyLoading("Error")
+    onError:(error:any)=>{
       setAlert({title:"Error",description:error.message,type:"error",pathname:"/dashboard/organizer"})
     }
   });

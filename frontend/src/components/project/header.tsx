@@ -1,4 +1,3 @@
-"use client";
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -31,7 +30,7 @@ export default function Navbar() {
   });
   const handleLogout=()=>{
     mutation.mutateAsync();
-    dispatch(logoutAction(null));
+    dispatch(logoutAction());
     navigate("/login");
   }
 

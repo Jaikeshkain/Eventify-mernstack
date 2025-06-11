@@ -39,7 +39,7 @@ export default function EventsList() {
     setCurrentPage(Number(searchParams.get("page")) || 1);
   }, [searchParams]);
 
-const { data, isLoading, isError, error } = useQuery({
+const { data, isLoading, error } = useQuery({
   queryKey: ["all-events", filters, currentPage],
   queryFn: () =>
     GetEventsAPI({

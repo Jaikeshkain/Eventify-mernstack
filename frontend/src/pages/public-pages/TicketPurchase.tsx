@@ -5,9 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt } from "react-icons/fa";
-import QRCode from "react-qr-code";
 import { GetEventByIdAPI } from "@/services/EventService";
-import TicketPaymentQR from "../organizer-pages/PurchasePage";
 import { useAuth } from "@/context/AuthContext";
 
 // Types

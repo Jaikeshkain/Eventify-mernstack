@@ -173,7 +173,7 @@ export default function AttendeeDashboard() {
                               </p>
                               <div className="bg-white/70 p-2 rounded-2xl shadow-md mb-2">
                                 <QRCodeSVG
-                                  value={`http://localhost:5173/ticket/view/${ticket._id}`}
+                                  value={`https://eventify-mernstack.onrender.com/ticket/view/${ticket._id}`}
                                   className="w-24 h-24"
                                 />
                               </div>

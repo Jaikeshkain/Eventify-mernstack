@@ -353,3 +353,17 @@ exports.editEvent = async (req, res, next) => {
     res.status(500).json({message:error.message || "Server error"});
   }
 }
+
+//get upcoming events
+exports.getUpcomingEvents=async(req,res,next)=>{
+  try {
+    const events=await Event.find({status:"upcoming"})
+    if(!events){
+      return res.status(404).json({message:"No upcoming events found"})
+    }
+    res.status(200).json({events})
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({message:error.message || "Server error"});
+  }
+}

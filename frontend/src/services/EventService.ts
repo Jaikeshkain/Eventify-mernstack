@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://eventify-mernstack.onrender.com';
+const API_URL = 'http://localhost:5000';
 
 const CreateEventAPI = async (formData:FormData,token:string) => {
     try {
@@ -116,4 +116,14 @@ const EditEventAPI=async(id:string,token:string,body:any)=>{
   }
 }
 
-export { CreateEventAPI, GetEventsAPI, GetEventsByOrganizerAPI, GetEventByIdAPI, DeleteEventAPI, EditEventImagesAPI, API_URL, EditEventAPI };
+//get upcoming events
+const GetUpcomingEventsAPI=async()=>{
+  try {
+    const response=await axios.get(`${API_URL}/api/events/upcoming-events`)
+    return response.data;
+  } catch (error:any) {
+    throw new Error(error?.response?.data?.message || "Failed to fetch upcoming events");
+  }
+}
+
+export { CreateEventAPI, GetEventsAPI, GetEventsByOrganizerAPI, GetEventByIdAPI, DeleteEventAPI, EditEventImagesAPI, API_URL, EditEventAPI, GetUpcomingEventsAPI };

@@ -7,12 +7,13 @@ import { useAuth } from "@/context/AuthContext";
 import { QRPaymentAPI } from "@/services/QRService";
 import LoadingSpinner from "@/components/project/LoadingSpinner";
 import CustomAlertMessageDialog from "@/components/project/AlertMessageDialog";
+import NotLogin from "@/components/project/auth/NotLogin";
 
 const TicketPaymentQR = () => {
   const { price, quantity, eventName,userId,eventId } = useParams();
   const upiId = "hjoy118181689-1@oksbi";
   const amount = Number(price) * Number(quantity);
-  const {token}=useAuth()
+  const {token,userData}=useAuth()
   const [loading,setLoading]=useState(false)
   const [alert,setAlert]=useState({title:"",description:"",type:"",pathname:""})
   const upiUrl = `upi://pay?pa=${upiId}&pn=Eventify&am=${amount}&cu=INR&tn=${encodeURIComponent(
@@ -63,6 +64,10 @@ const TicketPaymentQR = () => {
   }
   if(alert.title){
     return <CustomAlertMessageDialog title={alert.title} description={alert.description} type={alert.type as "success" | "error" | "pending"} pathname={alert.pathname}/>
+  }
+
+  if(!userData){
+    return <NotLogin/>
   }
 
   return (

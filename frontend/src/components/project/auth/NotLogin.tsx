@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const NotLogin=()=>{
     const navigate=useNavigate();
   return (
-    <div className="min-h-[80vh] bg-gradient-to-br from-[#050b2c] to-[#0a1854] flex items-center justify-center px-4 py-12">
+    <div className="min-h-[100vh] bg-gradient-to-br from-[#050b2c] to-[#0a1854] flex items-center justify-center px-4 py-12">
       <div className="relative">
         {/* Decorative Elements */}
         <div className="absolute top-0 right-0 w-64 h-64 bg-[#ffa509]/20 rounded-full blur-3xl -z-10"></div>
@@ -20,10 +20,10 @@ const NotLogin=()=>{
               </div>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Ready to List Your Event?
+              Are you ready to start?
             </h1>
             <p className="text-gray-300 text-lg">
-              Please login to start adding your event to our marketplace
+              Please login to start your journey.
             </p>
           </div>
 

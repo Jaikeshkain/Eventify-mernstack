@@ -25,6 +25,7 @@ import { MdCategory, MdOutlinePanoramaPhotosphereSelect } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 import DeleteEvent from "@/components/project/Events/DeleteEvent";
 
+
 export default function EventDetailsClient() {
   const { id } = useParams();
   const [showFullscreenSlider, setShowFullscreenSlider] = useState(false);
@@ -55,6 +56,7 @@ export default function EventDetailsClient() {
     queryFn: () => GetEventByIdAPI(id as string),
   });
 
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
       {isError ? (
@@ -75,7 +77,9 @@ export default function EventDetailsClient() {
               <div className="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6 text-sm sm:text-base">
                 <div className="flex items-center gap-2">
                   <FaCalendarAlt className="text-[#ffa509]" />
-                  <span>{format(new Date(data?.event?.date), "MMMM dd, yyyy")}</span>
+                  <span>
+                    {format(new Date(data?.event?.date), "MMMM dd, yyyy")}
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <FaClock className="text-[#ffa509]" />
@@ -223,9 +227,7 @@ export default function EventDetailsClient() {
               {data?.event?.organizer === userData?._id && (
                 <div className="bg-white mt-4 space-y-4 border border-gray-200/50 rounded-2xl shadow-lg p-6 hidden lg:block fixed right-8 w-72 z-30">
                   <Button
-                    onClick={() =>
-                      navigate(`/events/${data?.event?._id}/edit`)
-                    }
+                    onClick={() => navigate(`/events/${data?.event?._id}/edit`)}
                     className="w-full bg-[#ffa509] text-white py-3 rounded-xl text-sm font-medium hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
                   >
                     Edit Event

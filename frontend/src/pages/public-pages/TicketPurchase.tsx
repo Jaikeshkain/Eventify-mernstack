@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FaCalendarAlt, FaClock, FaMapMarkerAlt } from "react-icons/fa";
 import { GetEventByIdAPI } from "@/services/EventService";
 import { useAuth } from "@/context/AuthContext";
+import NotLogin from "@/components/project/auth/NotLogin";
 
 // Types
 interface Event {
@@ -58,6 +59,10 @@ export default function TicketPurchase() {
       </div>
     );
   }
+
+    if (!userData) {
+      return <NotLogin />;
+    }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#050b2c] to-[#0a1854] py-12 px-4">

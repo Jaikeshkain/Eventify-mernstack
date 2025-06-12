@@ -9,10 +9,12 @@ const { protect, isOrganizer } = require('../middlewares/auth');
 
 router.post('/create-event',protect,isOrganizer,upload.array('images',5),EventController.createEvent);
 router.get('/', EventController.getEvents);
-router.get('/organizer/:organizerId',protect,isOrganizer,EventController.getEventsByOrganizer);
-router.get('/:id',EventController.getEventById);
+router.get('/upcoming-events', EventController.getUpcomingEvents);
+router.get('/organizer/:organizerId', protect, isOrganizer, EventController.getEventsByOrganizer);
+router.get('/:id', EventController.getEventById);
 router.delete('/delete-event/:id',protect,isOrganizer,EventController.deleteEvent);
 router.put('/edit-event-images/:id', protect, isOrganizer, upload.array('newImages',5), EventController.editEventImages);
 router.put('/edit-event/:id', protect, isOrganizer, EventController.editEvent);
+
 
 module.exports = router;

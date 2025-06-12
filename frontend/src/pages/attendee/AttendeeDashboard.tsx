@@ -173,7 +173,7 @@ export default function AttendeeDashboard() {
                               </p>
                               <div className="bg-white/70 p-2 rounded-2xl shadow-md mb-2">
                                 <QRCodeSVG
-                                  value={`https://eventify36.netlify.app/ticket/view/${ticket._id}`}
+                                  value={`http://localhost:5173/ticket/view/${ticket._id}`}
                                   className="w-24 h-24"
                                 />
                               </div>

@@ -139,6 +139,7 @@ const TicketPaymentQR = () => {
             <button
               className="mt-4 w-full bg-[#ffa509] hover:bg-[#ff9100] text-white font-semibold py-2 px-6 rounded-xl transition-all duration-300 shadow"
               onClick={handleSubmitPaymentProof}
+              disabled={loading}
             >
               Upload Payment Proof
             </button>

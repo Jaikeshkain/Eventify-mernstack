@@ -357,7 +357,7 @@ exports.editEvent = async (req, res, next) => {
 //get upcoming events
 exports.getUpcomingEvents=async(req,res,next)=>{
   try {
-    const events=await Event.find({status:"upcoming"})
+    const events=await Event.find({status:"upcoming"}).sort({date:-1})
     if(!events){
       return res.status(404).json({message:"No upcoming events found"})
     }

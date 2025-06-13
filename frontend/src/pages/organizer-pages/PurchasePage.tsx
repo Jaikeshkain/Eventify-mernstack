@@ -8,6 +8,7 @@ import { QRPaymentAPI } from "@/services/QRService";
 import LoadingSpinner from "@/components/project/LoadingSpinner";
 import CustomAlertMessageDialog from "@/components/project/AlertMessageDialog";
 import NotLogin from "@/components/project/auth/NotLogin";
+import DelayedPage from "@/components/project/auth/DelayPage";
 
 const TicketPaymentQR = () => {
   const { price, quantity, eventName,userId,eventId } = useParams();
@@ -71,94 +72,104 @@ const TicketPaymentQR = () => {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#050b2c] to-[#0a1854] px-4 py-12">
-      <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 max-w-md w-full flex flex-col items-center border border-white/10">
-        <h1 className="text-3xl font-bold text-white mb-2 text-center">
-          Complete Your Payment
-        </h1>
-        <p className="text-gray-300 mb-6 text-center">
-          Scan the QR code below with your UPI app to pay for your tickets to
-          <span className="text-[#ffa509] font-semibold"> {eventName}</span>.
-        </p>
-        <div className="bg-white rounded-xl p-4 shadow-lg mb-4 flex flex-col items-center">
-          <QRCode value={upiUrl} size={180} />
-          <p className="mt-3 text-gray-700 text-center text-base font-medium">
-            Pay <span className="text-[#ffa509] font-bold text-lg">₹{amount}</span> via UPI
+    <DelayedPage delay={2000}>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#050b2c] to-[#0a1854] px-4 py-12">
+        <div className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 max-w-md w-full flex flex-col items-center border border-white/10">
+          <h1 className="text-3xl font-bold text-white mb-2 text-center">
+            Complete Your Payment
+          </h1>
+          <p className="text-gray-300 mb-6 text-center">
+            Scan the QR code below with your UPI app to pay for your tickets to
+            <span className="text-[#ffa509] font-semibold"> {eventName}</span>.
           </p>
-        </div>
-        <div className="w-full flex flex-col items-center mb-4">
-          <div className="flex items-center text-gray-300 text-sm mb-1">
-            <span className="font-semibold mr-2">Tickets:</span>
-            <span className="text-white">{quantity}</span>
+          <div className="bg-white rounded-xl p-4 shadow-lg mb-4 flex flex-col items-center">
+            <QRCode value={upiUrl} size={180} />
+            <p className="mt-3 text-gray-700 text-center text-base font-medium">
+              Pay{" "}
+              <span className="text-[#ffa509] font-bold text-lg">
+                ₹{amount}
+              </span>{" "}
+              via UPI
+            </p>
           </div>
-          <div className="flex items-center text-gray-300 text-sm">
-            <span className="font-semibold mr-2">UPI ID:</span>
-            <span className="text-white">{upiId}</span>
+          <div className="w-full flex flex-col items-center mb-4">
+            <div className="flex items-center text-gray-300 text-sm mb-1">
+              <span className="font-semibold mr-2">Tickets:</span>
+              <span className="text-white">{quantity}</span>
+            </div>
+            <div className="flex items-center text-gray-300 text-sm">
+              <span className="font-semibold mr-2">UPI ID:</span>
+              <span className="text-white">{upiId}</span>
+            </div>
           </div>
-        </div>
-        <div className="flex flex-col items-center mt-4">
-          {/* <button
+          <div className="flex flex-col items-center mt-4">
+            {/* <button
             onClick={() => navigate("/events")}
             className="mt-4 bg-[#ffa509] hover:bg-[#ff9100] text-white font-semibold py-2 px-6 rounded-xl transition-all duration-300 shadow"
           >
             Back to Events
           </button> */}
-          {/* upload payment proof */}
-          <div className="flex flex-col items-center mt-4 w-full">
-            <label
-              htmlFor="payment-proof"
-              className="w-full flex flex-col items-center px-4 py-6 bg-white/20 text-white rounded-xl shadow cursor-pointer hover:bg-white/30 transition-all duration-200 border-2 border-dashed border-[#ffa509]"
-            >
-              <svg
-                className="w-10 h-10 text-[#ffa509] mb-2"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                viewBox="0 0 24 24"
+            {/* upload payment proof */}
+            <div className="flex flex-col items-center mt-4 w-full">
+              <label
+                htmlFor="payment-proof"
+                className="w-full flex flex-col items-center px-4 py-6 bg-white/20 text-white rounded-xl shadow cursor-pointer hover:bg-white/30 transition-all duration-200 border-2 border-dashed border-[#ffa509]"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 16v-8m0 0-3.5 3.5M12 8l3.5 3.5M21 16.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2.5M16.5 12.5A5.5 5.5 0 0 0 7.5 12.5"
+                <svg
+                  className="w-10 h-10 text-[#ffa509] mb-2"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M12 16v-8m0 0-3.5 3.5M12 8l3.5 3.5M21 16.5V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2.5M16.5 12.5A5.5 5.5 0 0 0 7.5 12.5"
+                  />
+                </svg>
+                <span className="font-semibold text-base">
+                  Click to upload payment proof
+                </span>
+                <span className="text-xs text-gray-300 mt-1">
+                  (JPG, PNG, or PDF)
+                </span>
+                <input
+                  id="payment-proof"
+                  type="file"
+                  accept="image/*,application/pdf"
+                  className="hidden"
+                  onChange={(e: any) => handleUploadPaymentProof(e)}
                 />
-              </svg>
-              <span className="font-semibold text-base">
-                Click to upload payment proof
+              </label>
+              <button
+                className="mt-4 w-full bg-[#ffa509] hover:bg-[#ff9100] text-white font-semibold py-2 px-6 rounded-xl transition-all duration-300 shadow"
+                onClick={handleSubmitPaymentProof}
+                disabled={loading}
+              >
+                Upload Payment Proof
+              </button>
+            </div>
+            {/* payment proof preview */}
+            <div className="flex items-center mt-4">
+              {paymentProof && (
+                <img
+                  src={URL.createObjectURL(paymentProof)}
+                  alt="Payment Proof"
+                  className="w-24 h-24 rounded-lg"
+                />
+              )}
+            </div>
+            <div className="flex items-center text-green-400 mt-6">
+              <FaCheckCircle className="mr-2" />
+              <span className="text-sm text-white">
+                After payment, your ticket will be confirmed!
               </span>
-              <span className="text-xs text-gray-300 mt-1">
-                (JPG, PNG, or PDF)
-              </span>
-              <input
-                id="payment-proof"
-                type="file"
-                accept="image/*,application/pdf"
-                className="hidden"
-                onChange={(e:any) => handleUploadPaymentProof(e)}
-              />
-            </label>
-            <button
-              className="mt-4 w-full bg-[#ffa509] hover:bg-[#ff9100] text-white font-semibold py-2 px-6 rounded-xl transition-all duration-300 shadow"
-              onClick={handleSubmitPaymentProof}
-              disabled={loading}
-            >
-              Upload Payment Proof
-            </button>
-          </div>
-          {/* payment proof preview */}
-          <div className="flex items-center mt-4">
-            {paymentProof && (
-              <img src={URL.createObjectURL(paymentProof)} alt="Payment Proof" className="w-24 h-24 rounded-lg" />
-            )}
-          </div>
-          <div className="flex items-center text-green-400 mt-6">
-            <FaCheckCircle className="mr-2" />
-            <span className="text-sm text-white">
-              After payment, your ticket will be confirmed!
-            </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </DelayedPage>
   );
 };
 

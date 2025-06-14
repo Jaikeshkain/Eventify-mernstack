@@ -3,7 +3,7 @@ import type { Variants } from "motion/react";
 import { useQuery } from "@tanstack/react-query";
 import { GetEventsAPI } from "@/services/EventService";
 import { Link } from "react-router-dom";
-import { Calendar, LocateIcon, Ticket } from "lucide-react";
+import {Ticket } from "lucide-react";
 import LoadingSpinner from "../../LoadingSpinner";
 import AlertMessage from "../../AlertMessage";
 

@@ -83,7 +83,7 @@ function Card({ images, title, hueA, hueB, i,date,location,id }: CardProps) {
           whileHover={{ y: 15 }}
           transition={{ type: "spring", stiffness: 100, damping: 15 }}
         />
-        <div className="absolute top-0 left-0 right-0 bg-black/40 backdrop-blur-md text-white text-center opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-300 ease-out rounded-b-[20px] px-4 py-3">
+        <div className="absolute top-0 left-0 right-0 bg-black/40 backdrop-blur-md text-white text-center opacity-100  translate-y-4 group-hover:translate-y-0 transition-all duration-300 ease-out rounded-b-[20px] px-4 py-3">
           <h3 className="text-lg font-semibold truncate">{title}</h3>
           <p className="text-sm text-gray-200 mt-1">{date}</p>
           <p className="text-sm text-gray-300">{location}</p>

@@ -110,7 +110,6 @@ const EventHomepage: React.FC = () => {
             </motion.div>
           </div>
 
-          //popular card
 
           {
             <ScrollTriggered/>

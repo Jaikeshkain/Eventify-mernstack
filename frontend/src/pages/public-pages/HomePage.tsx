@@ -1,16 +1,8 @@
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { GetEventsAPI } from '@/services/EventService';
 import { useAuth } from '@/context/AuthContext';
-import { Badge } from '@/components/ui/badge';
-import LoadingSpinner from '@/components/project/LoadingSpinner';
-import AlertMessage from '@/components/project/AlertMessage';
 import { 
-  Calendar, 
-  MapPin, 
-  Users, 
   Sparkles, 
   ArrowRight, 
   Music, 
@@ -21,12 +13,12 @@ import {
   Briefcase,
   BookOpen,
   MoreHorizontal,
-  Ticket
 } from 'lucide-react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import DelayedPage from '@/components/project/auth/DelayPage';
 import HeroSection from '@/components/project/Events/homepage/HeroSection';
+import ScrollTriggered from '@/components/project/Events/Framer Motion/MotionCards';
 
 const iconMap: Record<string, React.ReactNode> = {
   Music: <Music className="w-6 h-6" />,
@@ -60,16 +52,6 @@ const EventHomepage: React.FC = () => {
     }
   };
 
-
-  const {
-    data: popularEvents,
-    isLoading: popularLoading,
-    error: popularError,
-  } = useQuery({
-    queryKey: ['popularEvents'],
-    queryFn: () =>
-      GetEventsAPI({ sortBy: 'attendees', order: 'desc', limit: 6 }),
-  });
 
 
 
@@ -128,75 +110,11 @@ const EventHomepage: React.FC = () => {
             </motion.div>
           </div>
 
-          {popularLoading ? (
-            <LoadingSpinner />
-          ) : popularError ? (
-            <AlertMessage
-              type="error"
-              message={(popularError as any)?.message}
-            />
-          ) : (
-            <motion.div
-              variants={staggerChildren}
-              className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-            >
-              {popularEvents?.events?.map((event: any) => (
-                <motion.div
-                  key={event._id}
-                  variants={fadeInUp}
-                  whileHover={{ y: -10, scale: 1.02 }}
-                  className="group relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-800/50 to-slate-900/80 backdrop-blur-sm border border-slate-700/50 hover:border-orange-500/50 transition-all duration-500"
-                >
-                  <div className="relative h-56 overflow-hidden">
-                    <img
-                      src={event?.images[0]?.url}
-                      alt={event?.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                    <Badge className="absolute top-4 right-4 bg-orange-500 text-white px-3 py-1">
-                      {event?.category}
-                    </Badge>
-                  </div>
+          //popular card
 
-                  <div className="p-6">
-                    <h3 className="text-2xl font-bold mb-4 group-hover:text-orange-400 transition-colors line-clamp-2">
-                      {event?.title}
-                    </h3>
-                    <div className="space-y-3 text-slate-300 mb-6">
-                      <div className="flex items-center space-x-3">
-                        <Calendar className="w-4 h-4 text-orange-400" />
-                        <span>
-                          {new Date(event?.date).toLocaleDateString()}
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <MapPin className="w-4 h-4 text-orange-400" />
-                        <span className="line-clamp-1">
-                          {event?.location?.venue}
-                        </span>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <Users className="w-4 h-4 text-orange-400" />
-                        <span>{event?.attendees?.length || 0} attending</span>
-                      </div>
-                    </div>
-
-                    <Link to={`/events/${event._id}`}>
-                      <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        className="w-full bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 py-3 rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40 flex items-center justify-center space-x-2"
-                      >
-                        <Ticket className="w-4 h-4" />
-                        <span>Get Tickets</span>
-                      </motion.button>
-                    </Link>
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          )}
+          {
+            <ScrollTriggered/>
+          }
         </motion.section>
 
         {/* Host Event Section - Only for Organizers */}

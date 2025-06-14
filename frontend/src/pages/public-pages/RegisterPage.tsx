@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {Link} from "react-router-dom";
@@ -17,6 +17,10 @@ export default function Register() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();  
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
   
   const mutation = useMutation({
     mutationFn: ()=>RegisterAPI(formData.username,formData.email,formData.role,formData.password,formData.confirmPassword),

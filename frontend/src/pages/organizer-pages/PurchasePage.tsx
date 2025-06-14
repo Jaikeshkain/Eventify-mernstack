@@ -1,7 +1,7 @@
 import QRCode from "react-qr-code";
 import { useParams } from "react-router-dom";
 import { FaCheckCircle } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { useAuth } from "@/context/AuthContext";
 import { QRPaymentAPI } from "@/services/QRService";
@@ -21,6 +21,10 @@ const TicketPaymentQR = () => {
     `${eventName} Tickets - uid:${userId}`
   )}`;
   const [paymentProof, setPaymentProof] = useState<File | null>(null);
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
   const handleUploadPaymentProof = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {

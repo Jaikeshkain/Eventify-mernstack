@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
@@ -29,6 +29,10 @@ export default function TicketPurchase() {
   const [quantity, setQuantity] = useState(1);
   const navigate = useNavigate();
   const {userData}=useAuth()
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
   // Fetch event details
   const { data, isLoading } = useQuery<{event:Event}>({
     queryKey: ["event", id],

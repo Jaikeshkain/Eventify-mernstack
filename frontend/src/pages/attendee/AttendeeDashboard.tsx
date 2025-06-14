@@ -50,6 +50,10 @@ export default function AttendeeDashboard() {
 
   const {token,userData}=useAuth()
   const [ticketData,setTicketData]=useState<Ticket[]>([])
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
   const {data}=useQuery({
     queryKey:["tickets"],
     queryFn:()=>getTicketsForAttendee(token as string)

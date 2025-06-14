@@ -46,6 +46,10 @@ export default function MyEvents() {
     limit: 10,
   });
 
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+
   useEffect(() => {
     const updatedFilters = {
       ...filters,

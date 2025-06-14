@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import {  useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -14,6 +14,10 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
 
   const dispatch=useDispatch()
   const mutation = useMutation({

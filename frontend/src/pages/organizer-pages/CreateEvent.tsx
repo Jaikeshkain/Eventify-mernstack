@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { FaHome, FaLink, FaLocationArrow, FaMoneyBillWave, FaTimes, FaUpload } from 'react-icons/fa';
 import { MdTitle, MdDescription, MdAccessTimeFilled, MdOutlineGroups3, MdCategory, MdOutlinePanoramaPhotosphereSelect, MdDateRange, MdMyLocation, MdOutlineSave } from 'react-icons/md';
@@ -36,6 +36,10 @@ export default function CreateEvent() {
     price: 0,
     capacity: 0,
   });
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
 
   const mutation = useMutation({
     mutationFn: async (formData: FormData) => CreateEventAPI(formData,token as string),

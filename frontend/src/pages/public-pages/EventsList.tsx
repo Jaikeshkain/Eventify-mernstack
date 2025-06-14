@@ -21,7 +21,9 @@ export default function EventsList() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
   const [currentPage, setCurrentPage] = useState(1);
   const [filters, setFilters] = useState<any>({});
 

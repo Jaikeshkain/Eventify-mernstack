@@ -40,6 +40,10 @@ const [alert,setAlert]=useState({title:"",description:"",type:"",pathname:""})
     },
   });
 
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 

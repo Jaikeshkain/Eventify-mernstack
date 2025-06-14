@@ -1,6 +1,6 @@
 // src/pages/TicketViewer.tsx
 import { useParams } from "react-router-dom";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getTicketByIdAPI } from "@/services/TicketService";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,10 @@ import html2canvas from "html2canvas";
 export default function TicketViewer() {
   const { ticketId } = useParams();
   const ticketRef = useRef(null);
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, []);
 
   const { data: ticket, isLoading } = useQuery({
     queryKey: ["ticket", ticketId],

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const eventSchema = new mongoose.Schema({
   organizer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   title: { type: String, required: true },
+  subtitle:{type:String,require:true},
   description: { type: String },
   tags: [{ type: String }],
   category: { type: String },

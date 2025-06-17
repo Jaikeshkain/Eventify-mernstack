@@ -18,7 +18,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import DelayedPage from '@/components/project/auth/DelayPage';
 import HeroSection from '@/components/project/Events/homepage/HeroSection';
-import ScrollTriggered from '@/components/project/Events/Framer Motion/MotionCards';
+import PopularEventsSection from '@/components/project/HomePage/PopularEventsSection';
 
 const iconMap: Record<string, React.ReactNode> = {
   Music: <Music className="w-6 h-6" />,
@@ -68,7 +68,7 @@ const EventHomepage: React.FC = () => {
     <DelayedPage delay={200}>
       <div className="min-h-screen bg-slate-900 text-white overflow-hidden">
         {/* Hero Section with Slider */}
-        <HeroSection fadeInUp={fadeInUp} staggerChildren={staggerChildren}/>
+        <HeroSection />
 
         {/* Popular Events Section */}
         <motion.section
@@ -110,10 +110,7 @@ const EventHomepage: React.FC = () => {
             </motion.div>
           </div>
 
-          {
-            <ScrollTriggered/>
-          }
-          
+          {<PopularEventsSection />}
         </motion.section>
 
         {/* Host Event Section - Only for Organizers */}

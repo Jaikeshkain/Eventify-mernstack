@@ -26,11 +26,12 @@ const [alert,setAlert]=useState({title:"",description:"",type:"",pathname:""})
 
   const [eventData, setEventData] = useState({
     title: "",
+    subtitle:"",
     category: "",
     description: "",
     price: "",
     capacity: "",
-    type: "virtual",
+    type: "",
     date: "",
     time: "",
     location: {
@@ -79,6 +80,7 @@ const [alert,setAlert]=useState({title:"",description:"",type:"",pathname:""})
       setIsLoadingData(false)
       setEventData({
         title:data.event.title,
+        subtitle:data.event.subtitle,
         category:data.event.category,
         description:data.event.description,
         price:data.event.price,
@@ -233,18 +235,60 @@ const [alert,setAlert]=useState({title:"",description:"",type:"",pathname:""})
 
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2 flex items-center">
-                  <MdCategory className="mr-2 text-[#ffa509]" />
-                  Category
+                  <MdTitle className="mr-2 text-[#ffa509]" />
+                  Sub Title
                 </label>
                 <input
                   type="text"
+                  name="subtitle"
+                  value={eventData.subtitle}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-xl bg-white/5 border-2 border-[#ffa509]/20 text-white px-4 py-3 focus:outline-none focus:border-[#ffa509] transition-colors placeholder-gray-500"
+                  placeholder="Enter property title"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2 flex items-center">
+                  <MdCategory className="mr-2 text-[#ffa509]" />
+                  Category
+                </label>
+                <select
                   name="category"
                   value={eventData.category}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-xl bg-white/5 border-2 border-[#ffa509]/20 text-white px-4 py-3 focus:outline-none focus:border-[#ffa509] transition-colors placeholder-gray-500"
-                  placeholder="Enter event category"
-                />
+                  className="w-full rounded-xl bg-white/5 border-2 border-[#ffa509]/20 text-white px-4 py-3 focus:outline-none focus:border-[#ffa509] transition-colors"
+                >
+                  <option className="text-black" value="Music">
+                    Music
+                  </option>
+                  <option className="text-black" value="Game">
+                    Game
+                  </option>
+                  <option className="text-black" value="Launch Event">
+                    Launch Event
+                  </option>
+                  <option className="text-black" value="Technology">
+                    Technology
+                  </option>
+                  <option className="text-black" value="Art">
+                    Art
+                  </option>
+                  <option className="text-black" value="Sports">
+                    Sports
+                  </option>
+                  <option className="text-black" value="Food">
+                    Food
+                  </option>
+                  <option className="text-black" value="Business">
+                    Business
+                  </option>
+                  <option className="text-black" value="Education">
+                    Education
+                  </option>
+                </select>
               </div>
 
               <div>
@@ -363,34 +407,34 @@ const [alert,setAlert]=useState({title:"",description:"",type:"",pathname:""})
                 />
               </div>
               {eventData.type === "in-person" && (
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2 flex items-center">
-                  <MdMyLocation className="mr-2 text-[#ffa509]" />
-                  Event Address
-                </label>
-                <input
-                  type="text"
-                  name="location.address"
-                  value={eventData.location.address}
-                  onChange={handleChange}
-                  className="w-full rounded-xl bg-white/5 border-2 border-[#ffa509]/20 text-white px-4 py-3 focus:outline-none focus:border-[#ffa509] transition-colors"
-                />
-              </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2 flex items-center">
+                    <MdMyLocation className="mr-2 text-[#ffa509]" />
+                    Event Address
+                  </label>
+                  <input
+                    type="text"
+                    name="location.address"
+                    value={eventData.location.address}
+                    onChange={handleChange}
+                    className="w-full rounded-xl bg-white/5 border-2 border-[#ffa509]/20 text-white px-4 py-3 focus:outline-none focus:border-[#ffa509] transition-colors"
+                  />
+                </div>
               )}
               {eventData.type === "virtual" && (
-              <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2 flex items-center">
-                  <FaLink className="mr-2 text-[#ffa509]" />
-                  Event Link
-                </label>
-                <input
-                  type="text"
-                  name="location.link"
-                  value={eventData.location.link}
-                  onChange={handleChange}
-                  className="w-full rounded-xl bg-white/5 border-2 border-[#ffa509]/20 text-white px-4 py-3 focus:outline-none focus:border-[#ffa509] transition-colors"
-                />
-              </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-300 mb-2 flex items-center">
+                    <FaLink className="mr-2 text-[#ffa509]" />
+                    Event Link
+                  </label>
+                  <input
+                    type="text"
+                    name="location.link"
+                    value={eventData.location.link}
+                    onChange={handleChange}
+                    className="w-full rounded-xl bg-white/5 border-2 border-[#ffa509]/20 text-white px-4 py-3 focus:outline-none focus:border-[#ffa509] transition-colors"
+                  />
+                </div>
               )}
 
               <div>
@@ -410,9 +454,21 @@ const [alert,setAlert]=useState({title:"",description:"",type:"",pathname:""})
             </div>
             {/* Submit Buttons */}
             <div className="flex gap-4 justify-end">
-              <DeleteEvent id={id as string} addName="Delete Event"/>
+              <DeleteEvent id={id as string} addName="Delete Event" />
 
-              <CustomAlertDialog title="Are you sure you want to update event?" description="This action cannot be undone." onConfirm={()=>{handleEditEventSubmit()}} onCancel={()=>{}} trigger={<Button className="px-8 py-4 bg-[#ffa509] text-[#050b2c] rounded-xl font-bold hover:bg-[#ff9100] transition-all duration-300 flex items-center gap-2">Update Event</Button>} />
+              <CustomAlertDialog
+                title="Are you sure you want to update event?"
+                description="This action cannot be undone."
+                onConfirm={() => {
+                  handleEditEventSubmit();
+                }}
+                onCancel={() => {}}
+                trigger={
+                  <Button className="px-8 py-4 bg-[#ffa509] text-[#050b2c] rounded-xl font-bold hover:bg-[#ff9100] transition-all duration-300 flex items-center gap-2">
+                    Update Event
+                  </Button>
+                }
+              />
             </div>
           </div>
         </form>
@@ -497,8 +553,22 @@ const [alert,setAlert]=useState({title:"",description:"",type:"",pathname:""})
             )}
             {/* Submit Buttons */}
             <div className="flex gap-4 justify-end">
-              <CustomAlertDialog title="Are you sure you want to update images?" description="This action cannot be undone." onConfirm={()=>{handleImageSubmit()}} onCancel={()=>{}} trigger={<Button className="px-8 py-4 bg-[#ffa509] text-[#050b2c] rounded-xl font-bold hover:bg-[#ff9100] transition-all duration-300 flex items-center gap-2">Update Images</Button>} />
-              <Button className="px-8 py-4 bg-[#ffa509] text-[#050b2c] rounded-xl font-bold hover:bg-[#ff9100] transition-all duration-300 flex items-center gap-2">Cancel</Button>
+              <CustomAlertDialog
+                title="Are you sure you want to update images?"
+                description="This action cannot be undone."
+                onConfirm={() => {
+                  handleImageSubmit();
+                }}
+                onCancel={() => {}}
+                trigger={
+                  <Button className="px-8 py-4 bg-[#ffa509] text-[#050b2c] rounded-xl font-bold hover:bg-[#ff9100] transition-all duration-300 flex items-center gap-2">
+                    Update Images
+                  </Button>
+                }
+              />
+              <Button className="px-8 py-4 bg-[#ffa509] text-[#050b2c] rounded-xl font-bold hover:bg-[#ff9100] transition-all duration-300 flex items-center gap-2">
+                Cancel
+              </Button>
             </div>
           </div>
         </form>

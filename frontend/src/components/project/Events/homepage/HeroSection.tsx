@@ -1,191 +1,195 @@
-import { GetUpcomingEventsAPI } from "@/services/EventService";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronUp, ChevronDown, Play, Star } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { motion } from "framer-motion";
-import { useRef, useState } from "react";
-import Slider from "react-slick";
-import LoadingSpinner from "../../LoadingSpinner";
-import AlertMessage from "../../AlertMessage";
-import { Badge } from "@/components/ui/badge";
-import { Sparkles, Calendar, MapPin } from "lucide-react";
-import { Link } from "react-router-dom";
+import { GetUpcomingEventsAPI } from "@/services/EventService";
+import { useNavigate } from "react-router-dom";
 
-const HeroSection = ({fadeInUp,staggerChildren}:{fadeInUp:any,staggerChildren:any}) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const thumbRefs = useRef<(HTMLImageElement | null)[]>([]);
-    const [hoveredEventId, setHoveredEventId] = useState<string | null>(null)
-    const sliderRef = useRef<any>(null);
+const HeroSlider = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const navigate=useNavigate()
 
-      const {
-        data: upcomingEvents,
-        isLoading: upcomingLoading,
-        error: upcomingError,
-      } = useQuery({
-        queryKey: ["upcomingEvents"],
-        queryFn: GetUpcomingEventsAPI,
-      });
+  const {
+    data: upcomingEvents,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["upcomingEvents"],
+    queryFn: GetUpcomingEventsAPI,
+  });
 
-      const sliderSettings = {
-        fade: true,
-        dots: false,
-        infinite: true,
-        speed: 800,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
-        autoplay: true,
-        autoplaySpeed: 4000,
-        accessibility: false, // important!
-        beforeChange: (_: number, next: number) => setCurrentIndex(next),
-      };
+  const events = upcomingEvents?.events || [];
 
+  useEffect(() => {
+    if (!isAutoPlaying || events.length === 0) return;
 
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % events.length);
+    }, 5000);
 
-    return (
-      <motion.section
-        className="relative h-screen overflow-hidden"
-        initial="initial"
-        animate="animate"
-        variants={staggerChildren}
-      >
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-pink-900/20 to-orange-900/30"></div>
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, events.length]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % events.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + events.length) % events.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
+  if (isLoading) return <div className="text-white p-10">Loading...</div>;
+  if (error)
+    return <div className="text-red-400 p-10">Error loading events.</div>;
+  if (!events.length)
+    return <div className="text-gray-400 p-10">No events available.</div>;
+
+  const currentEvent = events[currentSlide];
+
+  return (
+    <div className="relative h-screen bg-black overflow-hidden">
+      {/* Background */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentSlide}
+          initial={{ scale: 1.1, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+          transition={{ duration: 0.8 }}
+          className="absolute inset-0 z-0"
+        >
+          <div
+            className="w-full h-full bg-cover bg-center"
+            style={{
+              backgroundImage: `url(${currentEvent?.images?.[0]?.url})`,
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-70" />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Thumbnail Navigation */}
+      <div className="absolute left-8 top-1/2 transform -translate-y-1/2 z-30">
+        <div className="flex flex-col space-y-4">
+          <motion.button
+            onClick={prevSlide}
+            className="p-2 bg-white/20 rounded-full text-white"
+          >
+            <ChevronUp size={20} />
+          </motion.button>
+
+          <div className="flex flex-col space-y-3">
+            {events.map((event: any, index: number) => (
+              <motion.div
+                key={event._id}
+                onClick={() => goToSlide(index)}
+                className={`relative w-16 h-16 rounded-lg overflow-hidden border-2 cursor-pointer transition-all ${
+                  currentSlide === index
+                    ? "border-white shadow-lg"
+                    : "border-white/30 hover:border-white/60"
+                }`}
+              >
+                <img
+                  src={event?.images?.[0]?.url}
+                  className="w-full h-full object-cover"
+                />
+                {currentSlide === index && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute inset-0 flex items-center justify-center bg-black/30"
+                  >
+                    <Play className="text-white" size={16} />
+                  </motion.div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.button
+            onClick={nextSlide}
+            className="p-2 bg-white/20 rounded-full text-white"
+          >
+            <ChevronDown size={20} />
+          </motion.button>
         </div>
+      </div>
 
-        {/* Stage Lights Effect */}
-        <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-white/10 via-white/5 to-transparent z-10"></div>
-        <div className="absolute top-8 left-1/2 transform -translate-x-1/2 flex space-x-8 z-10">
-          {[...Array(5)].map((_, i) => (
+      {/* Content */}
+      <div className="relative z-20 h-full flex items-center">
+        <div className="container mx-auto px-8 ml-32">
+          <AnimatePresence mode="wait">
             <motion.div
-              key={i}
-              className="w-4 h-16 bg-gradient-to-b from-yellow-200 to-transparent rounded-full opacity-60"
-              animate={{
-                opacity: [0.3, 0.8, 0.3],
-                scaleY: [1, 1.2, 1],
-              }}
-              transition={{
-                duration: 2,
-                delay: i * 0.2,
-                repeat: Infinity,
-              }}
+              key={currentSlide}
+              initial={{ x: 100, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -100, opacity: 0 }}
+              transition={{ duration: 0.6 }}
+              className="max-w-3xl"
+            >
+              <motion.div className="flex items-center space-x-2 mb-4">
+                <Star className="w-5 h-5 text-white" />
+                <span className="text-sm bg-gradient-to-r from-pink-500 via-yellow-500 to-orange-500 bg-clip-text text-transparent uppercase tracking-wider">
+                  {currentEvent?.subtitle || "Featured Event"}
+                </span>
+              </motion.div>
+
+              <motion.h1 className="text-6xl font-bold bg-gradient-to-r from-yellow-400 via-pink-500 to-red-500 bg-clip-text text-transparent mb-6 leading-tight">
+                {currentEvent?.title}
+              </motion.h1>
+
+              <motion.p className="text-xl text-gray-200 mb-8 max-w-2xl">
+                {currentEvent?.description?.slice(0, 200)}...
+              </motion.p>
+
+              <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+                <motion.button
+                  onClick={() => navigate(`/events/${currentEvent._id}`)}
+                  className="px-8 py-4 bg-white text-black font-semibold rounded-full hover:bg-gray-100"
+                >
+                  Explore
+                </motion.button>
+
+                <motion.button
+                  onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+                  className="px-8 py-4 border-2 border-white text-white rounded-full hover:bg-white/10"
+                >
+                  {isAutoPlaying ? "Pause Auto-Play" : "Resume Auto-Play"}
+                </motion.button>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Dots */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-30">
+        <div className="flex space-x-3">
+          {events.map((_: any, index: number) => (
+            <motion.div
+              key={index}
+              onClick={() => goToSlide(index)}
+              className={`h-2 rounded-full cursor-pointer ${
+                currentSlide === index ? "w-12 bg-white" : "w-2 bg-white/40"
+              }`}
             />
           ))}
         </div>
+      </div>
 
-        {upcomingLoading ? (
-          <div className="flex items-center justify-center h-full">
-            <LoadingSpinner />
-          </div>
-        ) : upcomingError ? (
-          <div className="flex items-center justify-center h-full">
-            <AlertMessage
-              type="error"
-              message={(upcomingError as any)?.message}
-            />
-          </div>
-        ) : (
-          <Slider {...sliderSettings} className="h-full" ref={sliderRef}>
-            {upcomingEvents?.events?.map((event: any) => (
-              <div
-                key={event._id}
-                className="relative h-screen group"
-                onMouseEnter={() => setHoveredEventId(event._id)}
-                onMouseLeave={() => setHoveredEventId(null)}
-              >
-                <img
-                  src={event.images[0]?.url}
-                  alt={event.title}
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-20" />
+      {/* Floating Lights */}
+      <motion.div
+        animate={{ y: [0, -20, 0], rotate: [0, 5, 0] }}
+        transition={{ duration: 6, repeat: Infinity }}
+        className="absolute top-20 right-20 w-4 h-4 bg-white/30 rounded-full blur-sm"
+      />
+    </div>
+  );
+};
 
-                {/* Default Event Info */}
-                <motion.div
-                  className="absolute inset-0 z-30 flex items-center justify-center px-4"
-                  variants={fadeInUp}
-                >
-                  <div className="text-center max-w-4xl mx-auto">
-                    <Sparkles className="w-16 h-16 mx-auto mb-6 text-yellow-400 animate-pulse" />
-                    <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-white via-yellow-200 to-orange-300 bg-clip-text text-transparent">
-                      {event.title}
-                    </h1>
-                    <div className="flex items-center justify-center space-x-4 mb-4 text-xl">
-                      <Calendar className="w-6 h-6 text-orange-400" />
-                      <span>{new Date(event.date).toLocaleDateString()}</span>
-                    </div>
-                    <div className="flex items-center justify-center space-x-4 mb-8 text-xl">
-                      <MapPin className="w-6 h-6 text-orange-400" />
-                      <span>{event.location?.address?event.location?.address:event.location?.venue}</span>
-                    </div>
-                  </div>
-                </motion.div>
-
-                {/* Hover Details */}
-                {hoveredEventId === event._id && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-40 max-w-2xl mx-4"
-                  >
-                    <div className="bg-white/10 backdrop-blur-xl text-center border border-white/20 rounded-3xl p-8 shadow-2xl">
-                      <p className="text-lg text-gray-200 mb-6 line-clamp-3">
-                        {event.description}
-                      </p>
-                      <div className="flex flex-wrap justify-center gap-4 mb-6">
-                        <Badge className="bg-orange-500/20 text-orange-300 border-orange-500/30 px-4 py-2">
-                          {event.category}
-                        </Badge>
-                        <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30 px-4 py-2">
-                          {event.attendees?.length || 0} Attendees
-                        </Badge>
-                      </div>
-                      <Link to={`/events/${event._id}`}>
-                        <motion.button
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 px-12 py-4 rounded-full text-xl font-semibold shadow-2xl shadow-orange-500/25 transition-all duration-300"
-                        >
-                          View Details
-                        </motion.button>
-                      </Link>
-                    </div>
-                  </motion.div>
-                )}
-              </div>
-            ))}
-          </Slider>
-        )}
-
-        {/* Thumbnail Strip */}
-        {upcomingEvents?.events && (
-          <div className="absolute bottom-4 left-0 right-0 z-40 px-4">
-            <div className="flex gap-3 justify-center items-center overflow-x-auto no-scrollbar">
-              {upcomingEvents.events.map((event: any, index: number) => (
-                <img
-                  key={event._id}
-                  src={event.images[0]?.url}
-                  alt={event.title}
-                  ref={(el: any) => (thumbRefs.current[index] = el)}
-                  onClick={() => {
-                    sliderRef.current?.slickGoTo(index);
-                    setCurrentIndex(index);
-                  }}
-                  className={`w-20 h-14 object-cover rounded-lg cursor-pointer border-2 transition-all duration-300 ${
-                    index === currentIndex
-                      ? "border-orange-500 scale-110 shadow-xl shadow-orange-500/50"
-                      : "border-white/20 opacity-70 hover:opacity-100 hover:scale-105"
-                  }`}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-      </motion.section>
-    );
-}
-
-export default HeroSection;
+export default HeroSlider;

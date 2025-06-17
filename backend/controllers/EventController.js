@@ -62,6 +62,7 @@ exports.createEvent = async (req, res) => {
   try {
     const {
       title,
+      subtitle,
       description,
       tags,
       category,
@@ -101,6 +102,7 @@ exports.createEvent = async (req, res) => {
     const event = await Event.create({
       organizer,
       title,
+      subtitle,
       description,
       tags,
       category,

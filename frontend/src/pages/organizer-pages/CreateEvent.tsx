@@ -19,6 +19,7 @@ export default function CreateEvent() {
 
   const [eventData, setEventData] = useState({
     title: "",
+    subtitle:"",
     description: "",
     date: {
       start: "",
@@ -29,7 +30,7 @@ export default function CreateEvent() {
       address: "",
       link: "",
     },
-    category: "",
+    category: "Music",
     tags: "",
     images: [] as File[],
     type: "in-person",
@@ -89,6 +90,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   //status logic
   const formData = new FormData();
   formData.append('title', eventData.title);
+  formData.append('subtitle',eventData.subtitle);
   formData.append('description', eventData.description);
   formData.append('date', eventData.date.start);
   formData.append('time', eventData.date.time);
@@ -114,6 +116,7 @@ const handleDraft = async (e: React.MouseEvent<HTMLButtonElement>) => {
   //status logic
   const formData = new FormData();
   formData.append("title", eventData.title);
+  formData.append("subtitle",eventData.subtitle);
   formData.append("description", eventData.description);
   formData.append("date", eventData.date.start);
   formData.append("time", eventData.date.time);
@@ -285,18 +288,56 @@ const handleDraft = async (e: React.MouseEvent<HTMLButtonElement>) => {
 
               <div>
                 <label className="block text-sm font-medium text-gray-300 mb-2 flex items-center">
-                  <MdCategory className="mr-2 text-[#ffa509]" />
-                  Category
+                  <MdTitle className="mr-2 text-[#ffa509]" />
+                  Sub Title
                 </label>
                 <input
                   type="text"
+                  name="subtitle"
+                  value={eventData.subtitle}
+                  onChange={handleChange}
+                  required
+                  className="w-full rounded-xl bg-white/5 border-2 border-[#ffa509]/20 text-white px-4 py-3 focus:outline-none focus:border-[#ffa509] transition-colors placeholder-gray-500"
+                  placeholder="Enter property title"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-300 mb-2 flex items-center">
+                  <MdCategory className="mr-2 text-[#ffa509]" />
+                  Category
+                </label>
+                <select
                   name="category"
                   value={eventData.category}
                   onChange={handleChange}
                   required
-                  className="w-full rounded-xl bg-white/5 border-2 border-[#ffa509]/20 text-white px-4 py-3 focus:outline-none focus:border-[#ffa509] transition-colors placeholder-gray-500"
-                  placeholder="Enter property category"
-                />
+                  className="w-full rounded-xl bg-white/5 border-2 border-[#ffa509]/20 text-white px-4 py-3 focus:outline-none focus:border-[#ffa509] transition-colors"
+                >
+                  <option className="text-black" value="Music">
+                    Music
+                  </option>
+                  <option className="text-black" value="Game">Game</option>
+                  <option className="text-black" value="Launch Event">Launch Event</option>
+                  <option className="text-black" value="Technology">
+                    Technology
+                  </option>
+                  <option className="text-black" value="Art">
+                    Art
+                  </option>
+                  <option className="text-black" value="Sports">
+                    Sports
+                  </option>
+                  <option className="text-black" value="Food">
+                    Food
+                  </option>
+                  <option className="text-black" value="Business">
+                    Business
+                  </option>
+                  <option className="text-black" value="Education">
+                    Education
+                  </option>
+                </select>
               </div>
 
               <div>

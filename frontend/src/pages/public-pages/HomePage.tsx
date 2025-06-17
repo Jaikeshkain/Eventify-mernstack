@@ -110,10 +110,10 @@ const EventHomepage: React.FC = () => {
             </motion.div>
           </div>
 
-
           {
             <ScrollTriggered/>
           }
+          
         </motion.section>
 
         {/* Host Event Section - Only for Organizers */}

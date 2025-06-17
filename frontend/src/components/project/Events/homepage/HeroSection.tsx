@@ -39,6 +39,7 @@ const HeroSection = ({fadeInUp,staggerChildren}:{fadeInUp:any,staggerChildren:an
       };
 
 
+
     return (
       <motion.section
         className="relative h-screen overflow-hidden"

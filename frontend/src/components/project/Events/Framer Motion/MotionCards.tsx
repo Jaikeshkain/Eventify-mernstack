@@ -27,23 +27,27 @@ export default function ScrollTriggered() {
 
   return (
     <div style={container}>
-      {popularEvents?.events?.map((event: any, i: number) => {
-        const hueA = 30 + i * 30;
-        const hueB = hueA + 30;
-        return (
-          <Card
-            key={event?._id}
-            id={event?._id}
-            i={i}
-            hueA={hueA}
-            hueB={hueB}
-            images={event?.images[0]?.url}
-            title={event?.title}
-            date={event?.date.split("T")[0]}
-            location={event?.location?.address?event?.location?.address:event?.location?.venue}
-          />
-        );
-      })}
+        {popularEvents?.events?.map((event: any, i: number) => {
+          const hueA = 30 + i * 30;
+          const hueB = hueA + 30;
+          return (
+            <Card
+              key={event?._id}
+              id={event?._id}
+              i={i}
+              hueA={hueA}
+              hueB={hueB}
+              images={event?.images[0]?.url}
+              title={event?.title}
+              date={event?.date.split("T")[0]}
+              location={
+                event?.location?.address
+                  ? event?.location?.address
+                  : event?.location?.venue
+              }
+            />
+          );
+        })}
     </div>
   );
 }
@@ -128,10 +132,18 @@ const hue = (h: number) => `hsl(${h}, 100%, 50%)`;
 
 const container: React.CSSProperties = {
   margin: "100px auto",
-  maxWidth: 500,
   paddingBottom: 100,
   width: "100%",
+  display: "flex",
+  flexDirection: "row",
+  flexWrap: "wrap", // for horizontal scroll, or use 'wrap' for wrapping
+  justifyContent:"center",
+  gap: 24,
+  scrollbarWidth:"none",
+  paddingLeft: 24,
+  paddingRight: 24,
 };
+
 
 const cardContainer: React.CSSProperties = {
   overflow: "hidden",

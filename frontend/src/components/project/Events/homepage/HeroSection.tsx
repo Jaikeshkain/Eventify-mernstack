@@ -4,6 +4,7 @@ import { ChevronUp, ChevronDown, Play, Star } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { GetUpcomingEventsAPI } from "@/services/EventService";
 import { useNavigate } from "react-router-dom";
+import ModernLoadingSpinner from "../../MorderLoadingSpin";
 
 const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -43,7 +44,7 @@ const HeroSlider = () => {
     setCurrentSlide(index);
   };
 
-  if (isLoading) return <div className="text-white p-10">Loading...</div>;
+  if (isLoading) return <ModernLoadingSpinner/>;
   if (error)
     return <div className="text-red-400 p-10">Error loading events.</div>;
   if (!events.length)

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { GetEventsAPI } from "@/services/EventService";
 import TicketingPlatformCards from "./TicketingPlatformCards";
+import LoadingSpinner from "../LoadingSpinner";
 
 
 export default function PopularEventsSection() {
@@ -16,7 +17,7 @@ export default function PopularEventsSection() {
 
   if (isLoading)
     return (
-      <div className="text-center text-white py-10">Loading events...</div>
+      <LoadingSpinner/>
     );
   if (error)
     return (

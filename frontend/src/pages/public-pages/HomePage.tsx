@@ -70,7 +70,7 @@ const EventHomepage: React.FC = () => {
 
         {/* Popular Events Section */}
         <motion.section
-          className="relative py-24 px-4 bg-gradient-to-br from-slate-800 via-slate-900 to-black"
+          className="relative py-24  bg-gradient-to-br from-slate-800 via-slate-900 to-black"
           initial="initial"
           whileInView="animate"
           viewport={{ once: true }}
